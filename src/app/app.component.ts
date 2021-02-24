@@ -3,6 +3,7 @@ import { GraphEditorService } from './services/graph-editor.service';
 import { testButton } from '../test_data/example.button';
 import { testTable } from '../test_data/example.table';
 import { testForm } from 'src/test_data/example.form';
+import {testSlideToggle} from'../test_data/example.slideToggle';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,10 @@ export class AppComponent implements AfterViewInit {
       // this.graphEditorService.createComponent(testTable);
 
       // example4
-      this.graphEditorService.createComponent(testForm);
+      // this.graphEditorService.createComponent(testForm);
+
+      //myexample
+      this.graphEditorService.createComponent(testSlideToggle);
     }, 200)
   }
 }

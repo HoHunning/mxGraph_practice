@@ -1,3 +1,7 @@
+import { StyleLibrary } from "../styleLibrary";
+import { GraphEditorService } from "../services/graph-editor.service";
+
+
 export class Configuration {
     static configureEditorKeyBinding(editor: mxEditor): void {
         editor.addAction("mx-cut", (event) => {
@@ -42,13 +46,73 @@ export class Configuration {
         editor.graph.addListener(mxEvent.CLICK, (sender, event) => {
             let selectedCell = sender.selectionModel.cells[0];
             if(selectedCell.type == "button")
-                alert('click')
+            alert('click')
+            else if(selectedCell.type == "slideToggle"){
+                if(selectedCell.children == null)
+                    selectedCell = selectedCell.parent;
+                selectedCell.on = !selectedCell.on;
+                if(selectedCell.on){
+                    selectedCell.setStyle(this.convertJsonObjectToStyleDescription( StyleLibrary[0]["slideToggle"]["bar_2"]));
+                    selectedCell.children[0].setStyle(this.convertJsonObjectToStyleDescription(StyleLibrary[0]["slideToggle"]["icon_2"]));
+                    selectedCell.children[0].setGeometry(
+                        new mxGeometry(
+                            selectedCell.geometry.width - selectedCell.children[0].geometry.width,
+                            selectedCell.children[0].geometry.y,
+                            selectedCell.children[0].geometry.width,
+                            selectedCell.children[0].geometry.height,
+                    ));
+                }
+                else{
+                    selectedCell.setStyle(this.convertJsonObjectToStyleDescription(StyleLibrary[0]["slideToggle"]["bar_1"]));
+                    selectedCell.children[0].setStyle(this.convertJsonObjectToStyleDescription(StyleLibrary[0]["slideToggle"]["icon_1"]));
+                    selectedCell.children[0].setGeometry(
+                        new mxGeometry(
+                            0,
+                            selectedCell.children[0].geometry.y,
+                            selectedCell.children[0].geometry.width,
+                            selectedCell.children[0].geometry.height,
+                    ));
+                    
+                }
+                editor.graph.refresh(selectedCell.children[0]);
+                editor.graph.refresh(selectedCell);
+            }
         })
+        
 
         editor.graph.addListener(mxEvent.RESIZE_CELLS, (sender, event) => {
             let selectedCell = sender.selectionModel.cells[0];
             if(selectedCell.type == "button")
                 alert('resize')
+            else if(selectedCell.type == "slideToggle"){
+                if(selectedCell.children != null){
+
+                    for(var i = 0; i < selectedCell.children.length; i++){
+                        selectedCell.children[i].setGeometry(new mxGeometry(
+                            selectedCell.children[i].geometry.x,
+                            selectedCell.children[i].geometry.y,
+                            selectedCell.geometry.height,
+                            selectedCell.geometry.height,
+                            ));
+                            editor.graph.refresh(selectedCell.children[i]);
+                    }
+
+                }
+            }
         })
     }
+    static convertJsonObjectToStyleDescription(styleObj: any): String {
+        let styleDescription = "";
+        let styleKeys = Object.keys(styleObj);
+        for (let index = 0; index < styleKeys.length; index++) {
+          let key = styleKeys[index];
+          if (styleObj[key] == undefined)
+            continue
+          if (index == styleKeys.length - 1)
+            styleDescription = styleDescription + `${key}=${styleObj[key]};`
+          else
+            styleDescription = styleDescription + `${key}=${styleObj[key]};`
+        }
+        return styleDescription;
+      }
 }

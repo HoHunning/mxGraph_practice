@@ -88,6 +88,37 @@ export const StyleLibrary = [
             },
         },
 
+        slideToggle: {
+            bar_1: {
+                fillColor: "#ffffff",
+                strokeColor: "#000000",
+                fontColor: "#4f5d73",
+                fontSize: "20",
+                rounded: "1",
+            },
+            bar_2: {
+                fillColor: "#6495ed",
+                strokeColor: "#000000",
+                fontColor: "#4f5d73",
+                fontSize: "20",
+                rounded: "1",
+            },
+            icon_1: {
+                fillColor: "#d3d3d3",
+                strokeColor: "#000000",
+                fontColor: "#4f5d73",
+                fontSize: "20",
+                rounded: "1",
+            },
+            icon_2: {
+                fillColor: "#0000ff",
+                strokeColor: "#0000cd",
+                fontColor: "#4f5d73",
+                fontSize: "20",
+                rounded: "1",
+            }
+        },
+
         // composite component
         card: {
             cardBox: {

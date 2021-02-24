@@ -4,6 +4,7 @@ import { ButtonStrategy } from '../strategy/ButtonStrategy';
 import { FormStrategy } from '../strategy/FormStrategy';
 import { ICreateComponentStrategy } from '../strategy/ICreateComponentStrategy';
 import { InputTextStrategy } from '../strategy/InputTextStrategy';
+import { SlideToggleStrategy } from '../strategy/SlideToggleStrategy';
 import { TableStrategy } from '../strategy/TableStrategy';
 
 @Injectable({
@@ -41,6 +42,9 @@ export class GraphEditorService {
     }
     else if(uiComponent['type'] == 'form') {
       this.setStrategy(new FormStrategy());
+    }
+    else if(uiComponent['type'] == 'slideToggle'){
+      this.setStrategy(new SlideToggleStrategy());
     }
     if(parent == undefined)
       parent = this.editor.graph.defaultParent;
