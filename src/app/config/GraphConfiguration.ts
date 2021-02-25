@@ -45,6 +45,7 @@ export class Configuration {
     static configureGraphListener(editor: mxEditor): void {
         editor.graph.addListener(mxEvent.CLICK, (sender, event) => {
             let selectedCell = sender.selectionModel.cells[0];
+            console.log(selectedCell)
             if(selectedCell.type == "button")
             alert('click')
             else if(selectedCell.type == "slideToggle"){
@@ -86,17 +87,13 @@ export class Configuration {
                 alert('resize')
             else if(selectedCell.type == "slideToggle"){
                 if(selectedCell.children != null){
-
-                    for(var i = 0; i < selectedCell.children.length; i++){
-                        selectedCell.children[i].setGeometry(new mxGeometry(
-                            selectedCell.children[i].geometry.x,
-                            selectedCell.children[i].geometry.y,
-                            selectedCell.geometry.height,
-                            selectedCell.geometry.height,
-                            ));
-                            editor.graph.refresh(selectedCell.children[i]);
-                    }
-
+                    selectedCell.children[0].setGeometry(new mxGeometry(
+                        selectedCell.children[0].on ? selectedCell.width - selectedCell.children[0].width : 0,
+                        0,
+                        selectedCell.geometry.height,
+                        selectedCell.geometry.height,
+                        ));
+                    editor.graph.refresh(selectedCell.children[0]);
                 }
             }
         })

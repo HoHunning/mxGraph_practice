@@ -42,7 +42,6 @@ export class SlideToggleStrategy extends ICreateComponentStrategy {
     iconCell["isPrimary"] = false;
     iconCell["componentID"] = slideToggleComponent.id;
     iconCell["type"] = slideToggleComponent.type;
-
     return iconCell;
   }
 
